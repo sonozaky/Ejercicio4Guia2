@@ -288,7 +288,7 @@ public class GestionProducto extends javax.swing.JInternalFrame {
                 prod.setDescripcion("");
                 prod.setPrecio(0);
                 prod.setStock(0);
-                prod.setRubro(Categoria.N);
+                prod.setRubro(Categoria.COMESTIBLE);
             }
         }
     }//GEN-LAST:event_btnEliminarActionPerformed

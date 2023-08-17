@@ -4,6 +4,7 @@
  */
 package igu;
 
+import static igu.Menu.listaProductos;
 import javax.swing.JOptionPane;
 
 /**
@@ -28,6 +29,8 @@ public class GestionProducto extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -45,6 +48,19 @@ public class GestionProducto extends javax.swing.JInternalFrame {
         txtStock = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
 
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
         jLabel1.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
         jLabel1.setText("Gestion de Productos ");
 
@@ -59,12 +75,32 @@ public class GestionProducto extends javax.swing.JInternalFrame {
         jLabel6.setText("Stock");
 
         btnNuevo.setText("Nuevo");
+        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoActionPerformed(evt);
+            }
+        });
 
         btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         btnSalirç.setText("Salir");
+        btnSalirç.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirçActionPerformed(evt);
+            }
+        });
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "COMESTIBLE", "LIMPIEZA", "PERFUMERIA" }));
 
@@ -132,10 +168,11 @@ public class GestionProducto extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1)
                 .addGap(22, 22, 22)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel2)
+                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -167,17 +204,94 @@ public class GestionProducto extends javax.swing.JInternalFrame {
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
         try {
-                  for (Producto prod : Menu.listaProductos) {
-        Integer cambio=Integer.parseInt(txtCodigo.getText());    
-        if (cambio.equals(prod.getCodigo())) {
-            txtDescrip.setText("Vamos bien");
-        }
-        }  
+            for (Producto prod : Menu.listaProductos) {
+                Integer cambio = Integer.parseInt(txtCodigo.getText());
+                if (cambio.equals(prod.getCodigo())) {
+                    txtDescrip.setText(prod.getDescripcion());
+                    txtPrecio.setText(prod.getPrecio()+"");
+                    txtStock.setText(prod.getStock()+"");     
+                    jComboBox1.setSelectedItem(prod.getRubro().toString());
+                }
+            }
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Ingrese un codigo valido");
         }
 
     }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        // TODO add your handling code here:
+        if (txtDescrip.getText().isEmpty() || txtPrecio.getText().isEmpty() || txtStock.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No puede haber campos vacios");
+            return;
+        } else {
+
+        }
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+        // TODO add your handling code here:
+        String resultado = (String) jComboBox1.getSelectedItem();
+        if (txtDescrip.getText().isEmpty() || txtPrecio.getText().isEmpty() || txtStock.getText().isEmpty()||txtCodigo.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No puede haber campos vacios");
+            return;
+        } else {
+            switch (resultado) {
+                case "COMESTIBLE":
+                    int codigo = Integer.parseInt(txtCodigo.getText());
+                    double precio = Double.parseDouble(txtPrecio.getText());
+                    int stock = Integer.parseInt(txtStock.getText());
+                    listaProductos.add(new Producto(codigo,
+                            txtDescrip.getText(),
+                            precio,
+                            stock,
+                            Categoria.COMESTIBLE));
+                    JOptionPane.showMessageDialog(this, "Nuevo producto de Comestible agregado exitosamente");
+                    break;
+                case "LIMPIEZA":
+                    int codigo1 = Integer.parseInt(txtCodigo.getText());
+                    double precio1 = Double.parseDouble(txtPrecio.getText());
+                    int stock1 = Integer.parseInt(txtStock.getText());
+                    listaProductos.add(new Producto(codigo1,
+                            txtDescrip.getText(),
+                            precio1,
+                            stock1,
+                            Categoria.LIMPIEZA));
+                    JOptionPane.showMessageDialog(this, "Nuevo producto de Limpieza agregado exitosamente");
+                    break;
+                case "PERFUMERIA":
+                    int codigo2 = Integer.parseInt(txtCodigo.getText());
+                    double precio2 = Double.parseDouble(txtPrecio.getText());
+                    int stock2 = Integer.parseInt(txtStock.getText());
+                    listaProductos.add(new Producto(codigo2,
+                            txtDescrip.getText(),
+                            precio2,
+                            stock2,
+                            Categoria.PERFUMERIA));
+                    JOptionPane.showMessageDialog(this, "Nuevo producto de Perfumeria agregado exitosamente");
+                    break;
+            }
+        }
+    }//GEN-LAST:event_btnNuevoActionPerformed
+
+    private void btnSalirçActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirçActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_btnSalirçActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+        int codigo = Integer.parseInt(txtCodigo.getText());
+        for (Producto prod : Menu.listaProductos) {
+            if (prod.getCodigo()==codigo) {
+                prod.setCodigo(0);
+                prod.setDescripcion("");
+                prod.setPrecio(0);
+                prod.setStock(0);
+                prod.setRubro(Categoria.N);
+            }
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -193,9 +307,13 @@ public class GestionProducto extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtDescrip;
     private javax.swing.JTextField txtPrecio;
     private javax.swing.JTextField txtStock;
     // End of variables declaration//GEN-END:variables
+
+
 }

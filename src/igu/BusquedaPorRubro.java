@@ -11,7 +11,7 @@ import javax.swing.table.DefaultTableModel;
  * @author shion
  */
 public class BusquedaPorRubro extends javax.swing.JInternalFrame {
-private DefaultTableModel modelo=new DefaultTableModel();
+public DefaultTableModel modelo=new DefaultTableModel();
     /**
      * Creates new form BusquedaPorRubro
      */

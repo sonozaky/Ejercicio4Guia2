@@ -232,45 +232,20 @@ public class GestionProducto extends javax.swing.JInternalFrame {
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         // TODO add your handling code here:
         String resultado = (String) jComboBox1.getSelectedItem();
+        
         if (txtDescrip.getText().isEmpty() || txtPrecio.getText().isEmpty() || txtStock.getText().isEmpty()||txtCodigo.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "No puede haber campos vacios");
             return;
         } else {
-            switch (resultado) {
-                case "COMESTIBLE":
-                    int codigo = Integer.parseInt(txtCodigo.getText());
-                    double precio = Double.parseDouble(txtPrecio.getText());
-                    int stock = Integer.parseInt(txtStock.getText());
-                    listaProductos.add(new Producto(codigo,
-                            txtDescrip.getText(),
-                            precio,
-                            stock,
-                            Categoria.COMESTIBLE));
-                    JOptionPane.showMessageDialog(this, "Nuevo producto de Comestible agregado exitosamente");
-                    break;
-                case "LIMPIEZA":
-                    int codigo1 = Integer.parseInt(txtCodigo.getText());
-                    double precio1 = Double.parseDouble(txtPrecio.getText());
-                    int stock1 = Integer.parseInt(txtStock.getText());
-                    listaProductos.add(new Producto(codigo1,
-                            txtDescrip.getText(),
-                            precio1,
-                            stock1,
-                            Categoria.LIMPIEZA));
-                    JOptionPane.showMessageDialog(this, "Nuevo producto de Limpieza agregado exitosamente");
-                    break;
-                case "PERFUMERIA":
-                    int codigo2 = Integer.parseInt(txtCodigo.getText());
-                    double precio2 = Double.parseDouble(txtPrecio.getText());
-                    int stock2 = Integer.parseInt(txtStock.getText());
-                    listaProductos.add(new Producto(codigo2,
-                            txtDescrip.getText(),
-                            precio2,
-                            stock2,
-                            Categoria.PERFUMERIA));
-                    JOptionPane.showMessageDialog(this, "Nuevo producto de Perfumeria agregado exitosamente");
-                    break;
-            }
+            int codigo = Integer.parseInt(txtCodigo.getText());
+            double precio = Double.parseDouble(txtPrecio.getText());
+            int stock = Integer.parseInt(txtStock.getText());
+            listaProductos.add(new Producto(codigo,
+                    txtDescrip.getText(),
+                    precio,
+                    stock,
+                    Categoria.valueOf(resultado)));
+            JOptionPane.showMessageDialog(this, "Nuevo producto agregado exitosamente");
         }
     }//GEN-LAST:event_btnNuevoActionPerformed
 
